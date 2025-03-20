@@ -1,14 +1,11 @@
 import { GestureHandlerRootView, Text, View } from "@/shared/ui";
 import { FontAwesome } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
 import { useRef } from "react";
 import { Dimensions, FlatList, Image, StyleSheet } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 import { NativeViewGestureHandler } from "react-native-gesture-handler";
 
 export const HomePage = () => {
-  const router = useRouter();
-
   const nativeGestureRef = useRef(null);
   const items = new Array(100).fill(0).map((n, i) => i + 1);
   const width = Dimensions.get("window").width;
