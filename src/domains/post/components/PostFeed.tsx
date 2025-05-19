@@ -1,20 +1,23 @@
 import { FlatList, StyleSheet } from "react-native";
 import { useRef } from "react";
-import { NativeViewGestureHandler } from "react-native-gesture-handler";
-
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { GestureHandlerRootView } from "@/components/core";
 import { PostCard } from "./PostCard";
-import { usePosts, Post } from "../hooks/usePosts";
+import { usePosts } from "@/domains/post";
 import { View } from "@/components/core";
 
 export function PostFeed() {
-  const nativeGestureRef = useRef<any>(null);
+  const flatListRef = useRef<FlatList>(null);
   const { posts, loading, refetch } = usePosts();
 
+  // 새로운 제스처 API 사용
+  const nativeGesture = Gesture.Native();
+
   return (
-    <GestureHandlerRootView>
-      <NativeViewGestureHandler ref={nativeGestureRef}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <GestureDetector gesture={nativeGesture}>
         <FlatList
+          ref={flatListRef}
           style={styles.list}
           data={posts}
           nestedScrollEnabled
@@ -27,7 +30,7 @@ export function PostFeed() {
               likes={item.likes}
               content={item.content}
               images={item.images}
-              nativeGestureRef={nativeGestureRef}
+              nativeGestureRef={flatListRef}
             />
           )}
           ListEmptyComponent={
@@ -38,7 +41,7 @@ export function PostFeed() {
             ) : null
           }
         />
-      </NativeViewGestureHandler>
+      </GestureDetector>
     </GestureHandlerRootView>
   );
 }

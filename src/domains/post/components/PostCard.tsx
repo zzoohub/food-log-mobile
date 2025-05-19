@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions, Image, ScrollView } from "react-native";
+import { StyleSheet, Dimensions, Image, ScrollView, FlatList } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { View, Text } from "@/components/core";
 
@@ -7,7 +7,7 @@ interface PostCardProps {
   likes: number;
   content: string;
   images: string[];
-  nativeGestureRef: React.RefObject<any>;
+  nativeGestureRef: React.RefObject<FlatList<any> | null>;
 }
 
 export function PostCard({ username, likes, content, images, nativeGestureRef }: PostCardProps) {

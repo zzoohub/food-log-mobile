@@ -1,7 +1,7 @@
 import { StyleSheet, SafeAreaView, Image, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { View, Text, Spacing } from "@/components/core";
-import { useUserStore } from "@/src/domains/user/stores/userStore";
+import { useUserStore } from "@/domains/user";
 
 export function ProfilePage() {
   const { user, logout } = useUserStore();
