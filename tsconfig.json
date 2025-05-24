@@ -3,13 +3,34 @@
   "compilerOptions": {
     "strict": true,
     "jsx": "react-jsx",
+    "esModuleInterop": true,
     "paths": {
-      "@/*": ["./src/*"],
-      "@/components/*": ["./src/components/*"],
-      "@/domains/*": ["./src/domains/*"],
-      "@/assets/*": ["./assets/*"],
-      "~/*": ["./*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@/components/*": [
+        "./src/components/*"
+      ],
+      "@/domains/*": [
+        "./src/domains/*"
+      ],
+      "@/assets/*": [
+        "./assets/*"
+      ],
+      "~/*": [
+        "./*"
+      ]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

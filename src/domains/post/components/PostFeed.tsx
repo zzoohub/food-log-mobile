@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { GestureHandlerRootView } from "@/components/core";
 import { PostCard } from "./PostCard";
-import { usePosts } from "@/domains/post";
+import { Post, usePosts } from "@/domains/post";
 import { View } from "@/components/core";
 
 export function PostFeed() {
@@ -21,10 +21,10 @@ export function PostFeed() {
           style={styles.list}
           data={posts}
           nestedScrollEnabled
-          keyExtractor={item => item.id}
+          keyExtractor={(item: Post) => item.id}
           refreshing={loading}
           onRefresh={refetch}
-          renderItem={({ item }) => (
+          renderItem={({ item }: { item: Post }) => (
             <PostCard
               username={item.username}
               likes={item.likes}
