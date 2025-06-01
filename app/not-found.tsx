@@ -1,7 +1,6 @@
-import { Text, View } from "@/components/core";
 import { Link, Stack } from "expo-router";
 import { Fragment } from "react";
-import { StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 
 export default function NotFound() {
   return (

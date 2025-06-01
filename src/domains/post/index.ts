@@ -1,8 +1,7 @@
 // Components
-export { HomePage } from "./components/HomePage";
 export { PostCard } from "./components/PostCard";
 export { PostFeed } from "./components/PostFeed";
-export { CreatePostPage } from "./components/CreatePostPage";
+export { TakePicture } from "./components/TakePicture";
 
 // Hooks
 export { usePosts } from "./hooks/usePosts";

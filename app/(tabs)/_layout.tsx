@@ -5,7 +5,7 @@ import { useColorScheme } from "react-native";
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
-function TabBarIcon(props: { name: (typeof FontAwesome)["name"]; color: string }) {
+function TabBarIcon(props: { name: keyof typeof FontAwesome.glyphMap; color: string }) {
   return <FontAwesome size={24} style={{ marginBottom: -3 }} {...props} />;
 }
 
@@ -27,6 +27,7 @@ export default function TabLayout() {
         options={{
           title: "Post",
           headerShown: false,
+          tabBarStyle: { display: "none" },
           tabBarIcon: ({ color }: { color: string }) => <TabBarIcon name="plus-square-o" color={color} />,
         }}
       />

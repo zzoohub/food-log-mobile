@@ -1,4 +1,8 @@
-export { Header } from "./Header";
+export { Header } from "./layout/Header";
 
-// Re-export core components
-export * from "./core";
+export { Funnel } from "./funnel/Funnel";
+export { Step } from "./funnel/Funnel";
+export { useFunnel } from "./funnel/useFunnel";
+
+export { ExternalLink } from "./core/ExternalLink";
+export { Spacing } from "./core/Spacing";

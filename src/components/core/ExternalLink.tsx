@@ -1,6 +1,5 @@
-import { TouchableOpacity, TouchableOpacityProps } from "react-native";
+import { TouchableOpacity, TouchableOpacityProps, Text } from "react-native";
 import { openURL } from "expo-linking";
-import { Text } from "./Text";
 
 interface ExternalLinkProps extends Omit<TouchableOpacityProps, "onPress"> {
   href: string;

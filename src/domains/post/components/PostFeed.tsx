@@ -1,10 +1,8 @@
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { useRef } from "react";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import { GestureHandlerRootView } from "@/components/core";
+import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import { PostCard } from "./PostCard";
 import { Post, usePosts } from "@/domains/post";
-import { View } from "@/components/core";
 
 export function PostFeed() {
   const flatListRef = useRef<FlatList>(null);

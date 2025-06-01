@@ -1,6 +1,5 @@
-import { StyleSheet, Dimensions, Image, ScrollView, FlatList } from "react-native";
+import { StyleSheet, Dimensions, Image, ScrollView, FlatList, View, Text } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { View, Text } from "@/components/core";
 
 interface PostCardProps {
   username: string;
