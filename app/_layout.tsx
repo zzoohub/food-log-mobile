@@ -1,15 +1,15 @@
 import { StatusBar } from "expo-status-bar";
 import { Stack } from "expo-router";
-import Providers from "./providers";
+import { AppProvider } from "@/containers";
 import "react-native-reanimated";
 
 export default function RootLayout() {
   return (
-    <Providers>
+    <AppProvider>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
       </Stack>
       <StatusBar style="auto" />
-    </Providers>
+    </AppProvider>
   );
 }

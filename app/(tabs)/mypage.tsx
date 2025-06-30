@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { Spacing } from "@/components";
+import { Spacing } from "@/components/ui";
 import { useUserStore } from "@/domains/user";
 
 export default function ProfilePage() {
