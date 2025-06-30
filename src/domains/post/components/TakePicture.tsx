@@ -1,15 +1,19 @@
 import React, { useState, useRef, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Alert, Dimensions, StatusBar } from "react-native";
 import { CameraView, CameraType, FlashMode, useCameraPermissions } from "expo-camera";
+import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
+import { CreatePostParams, CreatePostSteps } from "~/app/(tabs)/create-post";
+import { FunnelSetState } from "@/components/utils/funnel/model";
 
 interface TakePictureProps {
-  onPhotoTaken?: (uri: string) => void;
+  setState: FunnelSetState<CreatePostSteps, CreatePostParams>;
   onClose?: () => void;
 }
 
-export function TakePicture({ onPhotoTaken, onClose }: TakePictureProps) {
+export function TakePicture({ onClose, setState }: TakePictureProps) {
   const [permission, requestPermission] = useCameraPermissions();
+  const [mediaPermission, requestMediaPermission] = ImagePicker.useMediaLibraryPermissions();
   const [cameraType, setCameraType] = useState<CameraType>("back");
   const [flashMode, setFlashMode] = useState<FlashMode>("off");
   const [isCapturing, setIsCapturing] = useState(false);
@@ -44,13 +48,43 @@ export function TakePicture({ onPhotoTaken, onClose }: TakePictureProps) {
       });
 
       if (photo?.uri) {
-        onPhotoTaken?.(photo.uri);
+        setState(prev => ({ ...prev, images: [...(prev.images || []), photo.uri] }));
       }
     } catch (error) {
       console.error("사진 촬영 실패:", error);
       Alert.alert("오류", "사진 촬영에 실패했습니다.");
     } finally {
       setIsCapturing(false);
+    }
+  };
+
+  const openAlbum = async () => {
+    if (!mediaPermission) {
+      return;
+    }
+
+    if (mediaPermission.status !== ImagePicker.PermissionStatus.GRANTED) {
+      const { status } = await requestMediaPermission();
+      if (status !== ImagePicker.PermissionStatus.GRANTED) {
+        Alert.alert("앨범 접근 권한 필요", "사진을 선택하려면 앨범 접근 권한이 필요합니다.", [
+          { text: "취소", style: "cancel" },
+          { text: "설정으로 이동", onPress: () => {} },
+        ]);
+        return;
+      }
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsMultipleSelection: true,
+    });
+
+    if (!result.canceled && result.assets) {
+      setState(prev => ({
+        ...prev,
+        images: [...(prev.images || []), ...result.assets.map(asset => asset.uri)],
+        step: "form",
+      }));
     }
   };
 
@@ -125,8 +159,12 @@ export function TakePicture({ onPhotoTaken, onClose }: TakePictureProps) {
         {/* 하단 컨트롤 */}
         <View style={styles.bottomControls}>
           <View style={styles.controlsRow}>
-            {/* 빈 공간 (균형을 위해) */}
-            <View style={styles.sideControl} />
+            {/* 앨범 선택 버튼 */}
+            <View style={styles.sideControl}>
+              <TouchableOpacity style={styles.controlButton} onPress={openAlbum}>
+                <Ionicons name="images-outline" size={24} color="white" />
+              </TouchableOpacity>
+            </View>
 
             {/* 촬영 버튼 */}
             <TouchableOpacity

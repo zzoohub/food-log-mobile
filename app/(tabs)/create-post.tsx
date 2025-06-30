@@ -1,28 +1,39 @@
 import { TakePicture } from "@/domains/post";
 import { useFunnel } from "@/components/utils";
 import { useRouter } from "expo-router";
-import { Text, StyleSheet, SafeAreaView } from "react-native";
+import { Text, StyleSheet } from "react-native";
+import { CreatePostForm } from "@/domains/post";
 
-type Steps = ["take-photo", "form"];
-interface CreatePostParams extends Record<string, unknown> {
-  title: string;
+export type CreatePostSteps = ["take-picture", "form"];
+export interface CreatePostParams extends Record<string, unknown> {
   images: string[];
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+  price?: number;
+  description?: string;
+  rating?: number;
+  calories?: number;
 }
 export default function CreatePostPage() {
-  const [Funnel, state, setState] = useFunnel<Steps, CreatePostParams>(["take-photo", "form"]).withState({
-    title: "",
+  const [Funnel, state, setState] = useFunnel<CreatePostSteps, CreatePostParams>(["take-picture", "form"]).withState({
     images: [],
+    location: {
+      latitude: 0,
+      longitude: 0,
+    },
   });
 
   const router = useRouter();
 
   return (
     <Funnel>
-      <Funnel.Step name="take-photo">
-        <TakePicture onClose={() => router.push("/")} />
+      <Funnel.Step name="take-picture">
+        <TakePicture onClose={() => router.push("/")} setState={setState} />
       </Funnel.Step>
       <Funnel.Step name="form">
-        <Text>form</Text>
+        <CreatePostForm state={state} setState={setState} />
       </Funnel.Step>
     </Funnel>
   );
