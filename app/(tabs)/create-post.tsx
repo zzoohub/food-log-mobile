@@ -1,5 +1,5 @@
-import { useFunnel } from "@/components";
 import { TakePicture } from "@/domains/post";
+import { useFunnel } from "@/lib";
 import { useRouter } from "expo-router";
 import { Text, StyleSheet, SafeAreaView } from "react-native";
 
