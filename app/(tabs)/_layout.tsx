@@ -1,4 +1,4 @@
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import { useColorScheme } from "react-native";
 
@@ -17,26 +17,26 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Dashboard",
           headerShown: false,
-          tabBarIcon: ({ color }: { color: string }) => <TabBarIcon name="home" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <MaterialIcons name="dashboard" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="create-post"
         options={{
-          title: "Post",
+          title: "Add",
           headerShown: false,
           tabBarStyle: { display: "none" },
           tabBarIcon: ({ color }: { color: string }) => <TabBarIcon name="plus-square-o" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="mypage"
+        name="feeds"
         options={{
-          title: "Profile",
+          title: "Feeds",
           headerShown: false,
-          tabBarIcon: ({ color }: { color: string }) => <TabBarIcon name="user" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <FontAwesome name="feed" size={24} color={color} />,
         }}
       />
     </Tabs>

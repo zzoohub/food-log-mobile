@@ -1,17 +1,15 @@
-import React, { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Alert, Dimensions, StatusBar } from "react-native";
 import { CameraView, CameraType, FlashMode, useCameraPermissions } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
-import { CreatePostParams, CreatePostSteps } from "~/app/(tabs)/create-post";
-import { FunnelSetState } from "@/components/utils/funnel/model";
 
 interface TakePictureProps {
-  setState: Dispatch<SetStateAction<CreatePostParams>>;
+  onTakePicture: (images: string[]) => void;
   onClose?: () => void;
 }
 
-export function TakePicture({ onClose, setState }: TakePictureProps) {
+export function TakePicture({ onClose, onTakePicture }: TakePictureProps) {
   const [permission, requestPermission] = useCameraPermissions();
   const [mediaPermission, requestMediaPermission] = ImagePicker.useMediaLibraryPermissions();
   const [cameraType, setCameraType] = useState<CameraType>("back");
@@ -48,7 +46,7 @@ export function TakePicture({ onClose, setState }: TakePictureProps) {
       });
 
       if (photo?.uri) {
-        setState(prev => ({ ...prev, images: [...(prev.images || []), photo.uri] }));
+        onTakePicture([photo.uri]);
       }
     } catch (error) {
       console.error("사진 촬영 실패:", error);
@@ -80,11 +78,7 @@ export function TakePicture({ onClose, setState }: TakePictureProps) {
     });
 
     if (!result.canceled && result.assets) {
-      setState(prev => ({
-        ...prev,
-        images: [...(prev.images || []), ...result.assets.map(asset => asset.uri)],
-        step: "form",
-      }));
+      onTakePicture(result.assets.map(asset => asset.uri));
     }
   };
 

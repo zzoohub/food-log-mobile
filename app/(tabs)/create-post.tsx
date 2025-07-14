@@ -1,11 +1,7 @@
 import { TakePicture } from "@/domains/post";
-import { useFunnel } from "@/components/utils";
 import { useRouter } from "expo-router";
-import { Text, StyleSheet } from "react-native";
-import { CreatePostForm } from "@/domains/post";
 import { useState } from "react";
 
-export type CreatePostSteps = ["take-picture", "form"];
 export interface CreatePostParams extends Record<string, unknown> {
   images: string[];
   location: {
@@ -27,12 +23,10 @@ export default function CreatePostPage() {
     },
   });
 
-  return <TakePicture onClose={() => router.push("/")} setState={setState} />;
-}
+  const handleTakePicture = (images: string[]) => {
+    setState(prevState => ({ ...prevState, images }));
+    router.push("/");
+  };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-});
+  return <TakePicture onClose={() => router.push("/")} onTakePicture={handleTakePicture} />;
+}
