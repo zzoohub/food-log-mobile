@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
-import QueryClientProvider from "./QueryClientProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export default function AppProvider({ children }: { children: ReactNode }) {
-  return <QueryClientProvider>{children}</QueryClientProvider>;
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { FunnelState, RouteFunnelProps, UseFunnelReturn } from "./model";
+import { FunnelState, RouteFunnelProps, UseFunnelReturn } from "./type";
 import { Funnel, Step } from "./Funnel";
 
 export const useFunnel = <Steps extends string[], State extends Record<string, unknown>>(

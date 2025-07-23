@@ -1,5 +1,5 @@
 import { Children, isValidElement, ReactElement, useEffect } from "react";
-import { FunnelProps, StepProps } from "./model";
+import { FunnelProps, StepProps } from "./type";
 
 export const Funnel = <Steps extends string[]>({ steps, step, children }: FunnelProps<Steps>) => {
   const validChildren = Children.toArray(children)
