@@ -5,7 +5,6 @@ import {
   Text, 
   StyleSheet, 
   Dimensions,
-  useColorScheme,
   FlatList
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -37,15 +36,8 @@ export function PhotoGrid({
   showAddButton = false,
   spacing = 8,
 }: PhotoGridProps) {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  
   const totalSpacing = spacing * (numColumns + 1);
   const photoSize = (width - totalSpacing) / numColumns;
-  
-  const backgroundColor = isDark ? '#1C1C1E' : '#F8F9FA';
-  const textColor = isDark ? '#FFFFFF' : '#000000';
-  const secondaryTextColor = isDark ? '#CCCCCC' : '#666666';
 
   const renderPhoto = ({ item, index }: { item: PhotoItem | 'add-button'; index: number }) => {
     if (item === 'add-button') {
@@ -56,7 +48,7 @@ export function PhotoGrid({
             {
               width: photoSize,
               height: photoSize,
-              backgroundColor,
+              backgroundColor: '#F8F9FA',
               marginLeft: index % numColumns === 0 ? 0 : spacing,
             }
           ]}

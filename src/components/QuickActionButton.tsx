@@ -2,21 +2,21 @@ import {
   TouchableOpacity, 
   Text, 
   StyleSheet, 
-  ViewStyle, 
-  TextStyle,
-  useColorScheme
-} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+  ViewStyle
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { darkTheme, componentStyles, textStyles } from '@/styles/tokens';
+import { triggerHaptic } from '@/utils';
+import type { BaseComponentProps } from '@/types';
 
-interface QuickActionButtonProps {
+interface QuickActionButtonProps extends BaseComponentProps {
   title: string;
   icon: keyof typeof Ionicons.glyphMap;
   onPress: () => void;
   variant?: 'primary' | 'secondary' | 'ghost';
   size?: 'small' | 'medium' | 'large';
-  style?: ViewStyle;
-  textStyle?: TextStyle;
   disabled?: boolean;
+  haptic?: boolean;
 }
 
 export function QuickActionButton({
@@ -25,49 +25,66 @@ export function QuickActionButton({
   onPress,
   variant = 'primary',
   size = 'medium',
-  style,
-  textStyle,
   disabled = false,
+  haptic = true,
+  testID,
+  style,
 }: QuickActionButtonProps) {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
+  const theme = darkTheme;
+
+  const handlePress = () => {
+    if (disabled) return;
+    
+    if (haptic) {
+      triggerHaptic('LIGHT');
+    }
+    
+    onPress();
+  };
 
   const getButtonStyle = (): ViewStyle => {
-    const baseStyle = styles[size];
+    const baseStyle = size === 'small' 
+      ? componentStyles.button.small 
+      : componentStyles.button.primary;
+    
+    const styles: ViewStyle = {
+      ...baseStyle,
+      opacity: disabled ? 0.4 : 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    };
     
     switch (variant) {
       case 'primary':
         return {
-          ...baseStyle,
-          backgroundColor: disabled ? '#CCCCCC' : '#FF6B35',
+          ...styles,
+          backgroundColor: theme.colors.primary,
         };
       case 'secondary':
         return {
-          ...baseStyle,
-          backgroundColor: isDark ? '#2C2C2E' : '#F0F0F0',
+          ...styles,
+          backgroundColor: theme.colors.surface,
           borderWidth: 1,
-          borderColor: isDark ? '#3C3C3E' : '#E0E0E0',
+          borderColor: theme.colors.border,
         };
       case 'ghost':
         return {
-          ...baseStyle,
+          ...styles,
           backgroundColor: 'transparent',
         };
       default:
-        return baseStyle;
+        return styles;
     }
   };
 
   const getTextColor = (): string => {
-    if (disabled) return '#999999';
-    
     switch (variant) {
       case 'primary':
         return 'white';
       case 'secondary':
-        return isDark ? '#FFFFFF' : '#000000';
       case 'ghost':
-        return isDark ? '#FFFFFF' : '#000000';
+        return theme.colors.text;
       default:
         return 'white';
     }
@@ -85,9 +102,10 @@ export function QuickActionButton({
   return (
     <TouchableOpacity
       style={[getButtonStyle(), style]}
-      onPress={onPress}
+      onPress={handlePress}
       disabled={disabled}
       activeOpacity={0.7}
+      testID={testID}
     >
       <Ionicons 
         name={icon} 
@@ -96,11 +114,10 @@ export function QuickActionButton({
         style={styles.icon} 
       />
       <Text style={[
+        textStyles.button,
         { color: getTextColor() },
-        styles.text,
-        size === 'small' && styles.smallText,
-        size === 'large' && styles.largeText,
-        textStyle
+        size === 'small' && { fontSize: 14 },
+        size === 'large' && { fontSize: 18 },
       ]}>
         {title}
       </Text>
@@ -109,41 +126,7 @@ export function QuickActionButton({
 }
 
 const styles = StyleSheet.create({
-  small: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 8,
-    minHeight: 36,
-  },
-  medium: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderRadius: 12,
-    minHeight: 48,
-  },
-  large: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-    borderRadius: 16,
-    minHeight: 56,
-  },
   icon: {
     marginRight: 8,
-  },
-  text: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  smallText: {
-    fontSize: 14,
-  },
-  largeText: {
-    fontSize: 18,
   },
 });

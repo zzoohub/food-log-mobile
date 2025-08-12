@@ -1,4 +1,4 @@
-import { TakePicture } from "@/domains/post";
+import { TakePicture } from "@/domains/posts";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 
@@ -15,7 +15,7 @@ export interface CreatePostParams extends Record<string, unknown> {
 }
 export default function CreatePostPage() {
   const router = useRouter();
-  const [state, setState] = useState<CreatePostParams>({
+  const [, setState] = useState<CreatePostParams>({
     images: [],
     location: {
       latitude: 0,

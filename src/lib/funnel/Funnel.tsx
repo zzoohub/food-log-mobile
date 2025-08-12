@@ -4,9 +4,7 @@ import { FunnelProps, StepProps } from "./type";
 export const Funnel = <Steps extends string[]>({ steps, step, children }: FunnelProps<Steps>) => {
   const validChildren = Children.toArray(children)
     .filter(isValidElement)
-    .filter(i => steps.includes((i.props as Partial<StepProps<Steps>>).name ?? "")) as Array<
-    ReactElement<StepProps<Steps>>
-  >;
+    .filter(i => steps.includes((i.props as Partial<StepProps<Steps>>).name ?? "")) as ReactElement<StepProps<Steps>>[];
 
   const targetStep = validChildren.find(child => child.props.name === step);
 

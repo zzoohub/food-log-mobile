@@ -8,14 +8,11 @@ import {
   TouchableOpacity, 
   Image,
   useColorScheme,
-  Dimensions,
   FlatList
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useDiscoverI18n } from "@/lib/i18n";
-
-const { width } = Dimensions.get("window");
 
 // Mock data for social feed
 const mockSocialPosts = [

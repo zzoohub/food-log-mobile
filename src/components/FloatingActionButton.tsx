@@ -2,7 +2,6 @@ import {
   TouchableOpacity, 
   StyleSheet, 
   ViewStyle,
-  useColorScheme,
   Animated,
   View
 } from "react-native";
@@ -30,44 +29,46 @@ export function FloatingActionButton({
   iconColor,
   animate = true,
 }: FloatingActionButtonProps) {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
+  // Theme detection removed as it was unused
   const scaleAnim = useRef(new Animated.Value(0)).current;
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     if (animate) {
       // Initial scale-in animation
-      Animated.spring(scaleAnim, {
+      const scaleSpring = Animated.spring(scaleAnim, {
         toValue: 1,
         useNativeDriver: true,
         tension: 100,
         friction: 8,
-      }).start();
+      });
+      scaleSpring.start();
 
       // Subtle pulse animation
-      const startPulse = () => {
-        Animated.sequence([
-          Animated.timing(pulseAnim, {
-            toValue: 1.05,
-            duration: 1000,
-            useNativeDriver: true,
-          }),
-          Animated.timing(pulseAnim, {
-            toValue: 1,
-            duration: 1000,
-            useNativeDriver: true,
-          }),
-        ]).start(() => {
-          setTimeout(startPulse, 3000); // Pulse every 3 seconds
-        });
+      const pulseSequence = Animated.sequence([
+        Animated.timing(pulseAnim, {
+          toValue: 1.05,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulseAnim, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ]);
+
+      const pulseLoop = Animated.loop(pulseSequence);
+      pulseLoop.start();
+
+      return () => {
+        scaleSpring.stop();
+        pulseLoop.stop();
       };
-      
-      setTimeout(startPulse, 2000); // Start pulsing after 2 seconds
     } else {
       scaleAnim.setValue(1);
     }
-  }, [animate]);
+  }, [animate, scaleAnim, pulseAnim]);
 
   const getButtonSize = (): number => {
     switch (size) {

@@ -3,7 +3,7 @@ import { ReactElement, ReactNode } from "react";
 export interface FunnelProps<Steps extends string[]> {
   steps: Steps;
   step: Steps[number];
-  children: Array<ReactElement<StepProps<Steps>>>;
+  children: ReactElement<StepProps<Steps>>[];
 }
 
 export interface StepProps<Steps extends string[]> {
@@ -29,5 +29,5 @@ export type UseFunnelReturn<Steps extends string[], State extends Record<string,
   FunnelComponent<Steps>,
   (step: Steps[number]) => void,
 ] & {
-  withState: (initialState: State) => [FunnelComponent<Steps>, FunnelState<Steps, State>, FunnelSetState<Steps, State>];
+  useWithState: (initialState: State) => [FunnelComponent<Steps>, FunnelState<Steps, State>, FunnelSetState<Steps, State>];
 };

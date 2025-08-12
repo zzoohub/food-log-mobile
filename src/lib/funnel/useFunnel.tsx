@@ -24,7 +24,7 @@ export const useFunnel = <Steps extends string[], State extends Record<string, u
     navigation.setParams({ step: newStep, ...newParams } as any);
   };
 
-  const withState = <State extends Record<string, unknown>>(initialState: State) => {
+  const useWithState = <State extends Record<string, unknown>>(initialState: State) => {
     const [state, setState] = useState<FunnelState<Steps, State>>(() => ({
       ...initialState,
       step,
@@ -46,5 +46,5 @@ export const useFunnel = <Steps extends string[], State extends Record<string, u
     return [FunnelComponent, state, updateState] as const;
   };
 
-  return Object.assign([FunnelComponent, setStep], { withState }) as UseFunnelReturn<Steps, State>;
+  return Object.assign([FunnelComponent, setStep], { useWithState }) as UseFunnelReturn<Steps, State>;
 };
