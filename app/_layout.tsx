@@ -3,7 +3,7 @@ import { Stack } from "expo-router";
 import { AppProvider } from "@/containers";
 import "react-native-reanimated";
 import { useColorScheme } from "react-native";
-import "@/lib/i18n"; // Initialize i18n
+import "@/lib/i18n";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -14,12 +14,54 @@ export default function RootLayout() {
       <Stack screenOptions={{ 
         headerShown: false,
         contentStyle: { backgroundColor: isDark ? '#000000' : '#FFFFFF' },
-        animation: 'fade', // Smooth transitions between screens
+        animation: 'slide_from_right',
+        gestureEnabled: true,
       }}>
+        {/* Onboarding Flow */}
         <Stack.Screen 
-          name="(tabs)" 
+          name="onboarding" 
           options={{
-            // Camera-first navigation handled by tabs layout
+            gestureEnabled: false,
+            animation: 'fade',
+          }}
+        />
+        
+        {/* Main App with Orbital Navigation */}
+        <Stack.Screen 
+          name="(main)" 
+          options={{
+            gestureEnabled: false,
+          }}
+        />
+        
+        {/* Modal Screens */}
+        <Stack.Screen 
+          name="meal-detail" 
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }}
+        />
+        
+        <Stack.Screen 
+          name="ai-coach" 
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_left',
+          }}
+        />
+        
+        <Stack.Screen 
+          name="profile" 
+          options={{
+            presentation: 'modal',
+          }}
+        />
+        
+        <Stack.Screen 
+          name="challenge-detail" 
+          options={{
+            presentation: 'modal',
           }}
         />
       </Stack>
