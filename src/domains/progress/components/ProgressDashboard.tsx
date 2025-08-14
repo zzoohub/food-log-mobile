@@ -1,15 +1,8 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { CircularProgress } from '@/components/CircularProgress';
-import { NutritionChart } from '@/components/NutritionChart';
-
+import { useState } from "react";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { CircularProgress } from "@/components/CircularProgress";
+import { NutritionChart } from "@/components/NutritionChart";
 
 interface ProgressDashboardProps {
   onNavigate: (section: string) => void;
@@ -46,28 +39,28 @@ const mockStats: DailyStats = {
 
 const mockAchievements: Achievement[] = [
   {
-    id: '1',
-    title: 'Protein Master',
-    description: 'Hit protein goal 7 days in a row',
-    emoji: '💪',
+    id: "1",
+    title: "Protein Master",
+    description: "Hit protein goal 7 days in a row",
+    emoji: "💪",
     progress: 5,
     target: 7,
     isCompleted: false,
   },
   {
-    id: '2',
-    title: 'Veggie Warrior',
-    description: 'Log 25 different vegetables',
-    emoji: '🥗',
+    id: "2",
+    title: "Veggie Warrior",
+    description: "Log 25 different vegetables",
+    emoji: "🥗",
     progress: 18,
     target: 25,
     isCompleted: false,
   },
   {
-    id: '3',
-    title: 'Consistency King',
-    description: 'Log meals for 30 days straight',
-    emoji: '🔥',
+    id: "3",
+    title: "Consistency King",
+    description: "Log meals for 30 days straight",
+    emoji: "🔥",
     progress: 14,
     target: 30,
     isCompleted: false,
@@ -75,17 +68,11 @@ const mockAchievements: Achievement[] = [
 ];
 
 export default function ProgressDashboard({ onNavigate }: ProgressDashboardProps) {
-  const [selectedPeriod, setSelectedPeriod] = useState<'day' | 'week' | 'month'>('day');
+  const [selectedPeriod, setSelectedPeriod] = useState<"day" | "week" | "month">("day");
 
-  const renderProgressRing = (
-    label: string,
-    current: number,
-    target: number,
-    color: string,
-    unit: string
-  ) => {
+  const renderProgressRing = (label: string, current: number, target: number, color: string, unit: string) => {
     const percentage = Math.min((current / target) * 100, 100);
-    
+
     return (
       <View style={styles.progressRingContainer}>
         <CircularProgress
@@ -123,12 +110,7 @@ export default function ProgressDashboard({ onNavigate }: ProgressDashboardProps
         </View>
       </View>
       <View style={styles.achievementBar}>
-        <View 
-          style={[
-            styles.achievementBarFill,
-            { width: `${(achievement.progress / achievement.target) * 100}%` }
-          ]} 
-        />
+        <View style={[styles.achievementBarFill, { width: `${(achievement.progress / achievement.target) * 100}%` }]} />
       </View>
     </TouchableOpacity>
   );
@@ -137,33 +119,27 @@ export default function ProgressDashboard({ onNavigate }: ProgressDashboardProps
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => onNavigate('social')}>
-          <Ionicons name="people-outline" size={24} color="white" />
+        <TouchableOpacity onPress={() => onNavigate("camera")}>
+          <Ionicons name="arrow-back" size={24} color="white" />
         </TouchableOpacity>
-        
+
         <Text style={styles.headerTitle}>Progress</Text>
-        
-        <TouchableOpacity onPress={() => onNavigate('camera')}>
-          <Ionicons name="camera-outline" size={24} color="white" />
+
+        <TouchableOpacity>
+          <Ionicons name="settings-outline" size={24} color="white" />
         </TouchableOpacity>
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Period Selector */}
         <View style={styles.periodSelector}>
-          {(['day', 'week', 'month'] as const).map((period) => (
+          {(["day", "week", "month"] as const).map(period => (
             <TouchableOpacity
               key={period}
-              style={[
-                styles.periodButton,
-                selectedPeriod === period && styles.periodButtonActive
-              ]}
+              style={[styles.periodButton, selectedPeriod === period && styles.periodButtonActive]}
               onPress={() => setSelectedPeriod(period)}
             >
-              <Text style={[
-                styles.periodButtonText,
-                selectedPeriod === period && styles.periodButtonTextActive
-              ]}>
+              <Text style={[styles.periodButtonText, selectedPeriod === period && styles.periodButtonTextActive]}>
                 {period.charAt(0).toUpperCase() + period.slice(1)}
               </Text>
             </TouchableOpacity>
@@ -175,10 +151,10 @@ export default function ProgressDashboard({ onNavigate }: ProgressDashboardProps
           <View style={styles.summaryHeader}>
             <Text style={styles.summaryTitle}>Today's Summary</Text>
             <Text style={styles.summaryDate}>
-              {new Date().toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                month: 'short', 
-                day: 'numeric' 
+              {new Date().toLocaleDateString("en-US", {
+                weekday: "long",
+                month: "short",
+                day: "numeric",
               })}
             </Text>
           </View>
@@ -189,19 +165,17 @@ export default function ProgressDashboard({ onNavigate }: ProgressDashboardProps
               <Text style={styles.calorieLabel}>calories consumed</Text>
             </View>
             <View style={styles.calorieRemaining}>
-              <Text style={styles.remainingValue}>
-                {mockStats.calories.target - mockStats.calories.current}
-              </Text>
+              <Text style={styles.remainingValue}>{mockStats.calories.target - mockStats.calories.current}</Text>
               <Text style={styles.remainingLabel}>remaining</Text>
             </View>
           </View>
 
           <View style={styles.calorieBar}>
-            <View 
+            <View
               style={[
                 styles.calorieBarFill,
-                { width: `${(mockStats.calories.current / mockStats.calories.target) * 100}%` }
-              ]} 
+                { width: `${(mockStats.calories.current / mockStats.calories.target) * 100}%` },
+              ]}
             />
           </View>
         </View>
@@ -209,16 +183,12 @@ export default function ProgressDashboard({ onNavigate }: ProgressDashboardProps
         {/* Nutrition Rings */}
         <View style={styles.nutritionSection}>
           <Text style={styles.sectionTitle}>Macronutrients</Text>
-          <ScrollView 
-            horizontal 
-            showsHorizontalScrollIndicator={false}
-            style={styles.nutritionRings}
-          >
-            {renderProgressRing('Protein', mockStats.protein.current, mockStats.protein.target, '#FF6B35', 'g')}
-            {renderProgressRing('Carbs', mockStats.carbs.current, mockStats.carbs.target, '#4ECDC4', 'g')}
-            {renderProgressRing('Fat', mockStats.fat.current, mockStats.fat.target, '#45B7D1', 'g')}
-            {renderProgressRing('Fiber', mockStats.fiber.current, mockStats.fiber.target, '#96CEB4', 'g')}
-            {renderProgressRing('Water', mockStats.water.current, mockStats.water.target, '#6C7CE7', 'cups')}
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.nutritionRings}>
+            {renderProgressRing("Protein", mockStats.protein.current, mockStats.protein.target, "#FF6B35", "g")}
+            {renderProgressRing("Carbs", mockStats.carbs.current, mockStats.carbs.target, "#4ECDC4", "g")}
+            {renderProgressRing("Fat", mockStats.fat.current, mockStats.fat.target, "#45B7D1", "g")}
+            {renderProgressRing("Fiber", mockStats.fiber.current, mockStats.fiber.target, "#96CEB4", "g")}
+            {renderProgressRing("Water", mockStats.water.current, mockStats.water.target, "#6C7CE7", "cups")}
           </ScrollView>
         </View>
 
@@ -230,7 +200,7 @@ export default function ProgressDashboard({ onNavigate }: ProgressDashboardProps
               <Text style={styles.seeAllText}>See all</Text>
             </TouchableOpacity>
           </View>
-          
+
           <View style={styles.heatmapContainer}>
             <NutritionChart type="heatmap" />
           </View>
@@ -242,21 +212,17 @@ export default function ProgressDashboard({ onNavigate }: ProgressDashboardProps
             <Text style={styles.characterEmoji}>🌟</Text>
             <View style={styles.characterInfo}>
               <Text style={styles.characterTitle}>The Balanced Explorer</Text>
-              <Text style={styles.characterDescription}>
-                You're doing great at maintaining variety in your diet!
-              </Text>
+              <Text style={styles.characterDescription}>You're doing great at maintaining variety in your diet!</Text>
             </View>
             <View style={styles.characterLevel}>
               <Text style={styles.levelText}>Lv.7</Text>
             </View>
           </View>
-          
+
           <View style={styles.diversityScore}>
             <Text style={styles.diversityLabel}>Food Diversity Score</Text>
             <Text style={styles.diversityValue}>82/100</Text>
-            <Text style={styles.diversityTip}>
-              Try a new cuisine this week to boost your score!
-            </Text>
+            <Text style={styles.diversityTip}>Try a new cuisine this week to boost your score!</Text>
           </View>
         </View>
 
@@ -268,21 +234,19 @@ export default function ProgressDashboard({ onNavigate }: ProgressDashboardProps
               <Text style={styles.seeAllText}>View all</Text>
             </TouchableOpacity>
           </View>
-          
+
           {mockAchievements.map(renderAchievement)}
         </View>
 
         {/* Weekly Insights */}
         <View style={styles.insightsSection}>
           <Text style={styles.sectionTitle}>Weekly Insights</Text>
-          
+
           <View style={styles.insightCard}>
             <Ionicons name="trending-up" size={24} color="#4ECDC4" />
             <View style={styles.insightContent}>
               <Text style={styles.insightTitle}>Protein intake improved</Text>
-              <Text style={styles.insightDescription}>
-                You hit your protein goal 5 out of 7 days this week!
-              </Text>
+              <Text style={styles.insightDescription}>You hit your protein goal 5 out of 7 days this week!</Text>
             </View>
           </View>
 
@@ -290,9 +254,7 @@ export default function ProgressDashboard({ onNavigate }: ProgressDashboardProps
             <Ionicons name="restaurant" size={24} color="#FF6B35" />
             <View style={styles.insightContent}>
               <Text style={styles.insightTitle}>New favorite: Mediterranean</Text>
-              <Text style={styles.insightDescription}>
-                You've logged 4 Mediterranean meals this week.
-              </Text>
+              <Text style={styles.insightDescription}>You've logged 4 Mediterranean meals this week.</Text>
             </View>
           </View>
         </View>
@@ -304,28 +266,28 @@ export default function ProgressDashboard({ onNavigate }: ProgressDashboardProps
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: "#000000",
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingTop: 60,
     paddingHorizontal: 20,
     paddingBottom: 16,
   },
   headerTitle: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   content: {
     flex: 1,
     paddingHorizontal: 16,
   },
   periodSelector: {
-    flexDirection: 'row',
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    flexDirection: "row",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderRadius: 12,
     padding: 4,
     marginBottom: 20,
@@ -333,120 +295,120 @@ const styles = StyleSheet.create({
   periodButton: {
     flex: 1,
     paddingVertical: 8,
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 8,
   },
   periodButtonActive: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: "#FF6B35",
   },
   periodButtonText: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   periodButtonTextActive: {
-    color: 'white',
+    color: "white",
   },
   summaryCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
     borderRadius: 16,
     padding: 20,
     marginBottom: 20,
   },
   summaryHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 16,
   },
   summaryTitle: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   summaryDate: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 14,
   },
   calorieOverview: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 16,
   },
   calorieMain: {
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
   },
   calorieValue: {
-    color: 'white',
+    color: "white",
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   calorieLabel: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 14,
   },
   calorieRemaining: {
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
   remainingValue: {
-    color: '#FF6B35',
+    color: "#FF6B35",
     fontSize: 24,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   remainingLabel: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 14,
   },
   calorieBar: {
     height: 8,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderRadius: 4,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   calorieBarFill: {
-    height: '100%',
-    backgroundColor: '#FF6B35',
+    height: "100%",
+    backgroundColor: "#FF6B35",
   },
   nutritionSection: {
     marginBottom: 24,
   },
   sectionTitle: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 16,
   },
   nutritionRings: {
     paddingVertical: 8,
   },
   progressRingContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginRight: 24,
   },
   progressContent: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: '100%',
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    height: "100%",
   },
   progressValue: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   progressUnit: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 10,
   },
   progressLabel: {
-    color: 'white',
+    color: "white",
     fontSize: 12,
-    fontWeight: '500',
+    fontWeight: "500",
     marginTop: 8,
   },
   progressTarget: {
-    color: 'rgba(255, 255, 255, 0.5)',
+    color: "rgba(255, 255, 255, 0.5)",
     fontSize: 10,
     marginTop: 2,
   },
@@ -454,19 +416,19 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 16,
   },
   seeAllText: {
-    color: '#FF6B35',
+    color: "#FF6B35",
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   heatmapContainer: {
     height: 120,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
     borderRadius: 12,
     padding: 16,
   },
@@ -474,9 +436,9 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   characterCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
@@ -489,59 +451,59 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   characterTitle: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 4,
   },
   characterDescription: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 14,
   },
   characterLevel: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: "#FF6B35",
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 12,
   },
   levelText: {
-    color: 'white',
+    color: "white",
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   diversityScore: {
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
     borderRadius: 12,
     padding: 16,
   },
   diversityLabel: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 14,
     marginBottom: 4,
   },
   diversityValue: {
-    color: 'white',
+    color: "white",
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 8,
   },
   diversityTip: {
-    color: '#4ECDC4',
+    color: "#4ECDC4",
     fontSize: 12,
-    fontStyle: 'italic',
+    fontStyle: "italic",
   },
   achievementsSection: {
     marginBottom: 24,
   },
   achievementCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
   },
   achievementHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 12,
   },
   achievementEmoji: {
@@ -552,40 +514,40 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   achievementTitle: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 2,
   },
   achievementDescription: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 12,
   },
   achievementProgress: {
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
   achievementProgressText: {
-    color: '#FF6B35',
+    color: "#FF6B35",
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   achievementBar: {
     height: 4,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderRadius: 2,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   achievementBarFill: {
-    height: '100%',
-    backgroundColor: '#FF6B35',
+    height: "100%",
+    backgroundColor: "#FF6B35",
   },
   insightsSection: {
     marginBottom: 24,
   },
   insightCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
@@ -595,13 +557,13 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   insightTitle: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 4,
   },
   insightDescription: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 14,
   },
 });

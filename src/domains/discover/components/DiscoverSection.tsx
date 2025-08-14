@@ -1,16 +1,8 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Dimensions,
-  Image,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Image } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 interface DiscoverSectionProps {
   onNavigate: (section: string) => void;
@@ -24,7 +16,7 @@ interface Challenge {
   emoji: string;
   participants: number;
   timeLeft: string;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: "easy" | "medium" | "hard";
   reward: string;
 }
 
@@ -34,7 +26,7 @@ interface Recipe {
   image: string;
   cookTime: number;
   calories: number;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: "easy" | "medium" | "hard";
   tags: string[];
 }
 
@@ -50,63 +42,63 @@ interface Restaurant {
 
 const mockChallenges: Challenge[] = [
   {
-    id: '1',
-    title: 'Veggie Monday',
-    description: 'Eat 5 different vegetables today',
-    emoji: '🥬',
+    id: "1",
+    title: "Veggie Monday",
+    description: "Eat 5 different vegetables today",
+    emoji: "🥬",
     participants: 1247,
-    timeLeft: '6h left',
-    difficulty: 'easy',
-    reward: '50 XP',
+    timeLeft: "6h left",
+    difficulty: "easy",
+    reward: "50 XP",
   },
   {
-    id: '2',
-    title: 'Protein Power Week',
-    description: 'Hit protein goals for 7 days',
-    emoji: '💪',
+    id: "2",
+    title: "Protein Power Week",
+    description: "Hit protein goals for 7 days",
+    emoji: "💪",
     participants: 892,
-    timeLeft: '3 days left',
-    difficulty: 'medium',
-    reward: 'Protein Master Badge',
+    timeLeft: "3 days left",
+    difficulty: "medium",
+    reward: "Protein Master Badge",
   },
 ];
 
 const mockRecipes: Recipe[] = [
   {
-    id: '1',
-    title: 'Mediterranean Buddha Bowl',
-    image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300&h=200&fit=crop',
+    id: "1",
+    title: "Mediterranean Buddha Bowl",
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300&h=200&fit=crop",
     cookTime: 20,
     calories: 380,
-    difficulty: 'easy',
-    tags: ['healthy', 'vegetarian', 'high-protein'],
+    difficulty: "easy",
+    tags: ["healthy", "vegetarian", "high-protein"],
   },
   {
-    id: '2',
-    title: 'Grilled Salmon & Quinoa',
-    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=300&h=200&fit=crop',
+    id: "2",
+    title: "Grilled Salmon & Quinoa",
+    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=300&h=200&fit=crop",
     cookTime: 25,
     calories: 520,
-    difficulty: 'medium',
-    tags: ['high-protein', 'omega-3', 'gluten-free'],
+    difficulty: "medium",
+    tags: ["high-protein", "omega-3", "gluten-free"],
   },
 ];
 
 const mockRestaurants: Restaurant[] = [
   {
-    id: '1',
-    name: 'Green Garden Café',
-    image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=300&h=200&fit=crop',
-    cuisine: 'Healthy',
+    id: "1",
+    name: "Green Garden Café",
+    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=300&h=200&fit=crop",
+    cuisine: "Healthy",
     rating: 4.8,
     distance: 0.3,
     healthScore: 95,
   },
   {
-    id: '2',
-    name: 'Mediterranean Bistro',
-    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop',
-    cuisine: 'Mediterranean',
+    id: "2",
+    name: "Mediterranean Bistro",
+    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop",
+    cuisine: "Mediterranean",
     rating: 4.6,
     distance: 0.7,
     healthScore: 88,
@@ -114,14 +106,18 @@ const mockRestaurants: Restaurant[] = [
 ];
 
 export default function DiscoverSection({ onNavigate }: DiscoverSectionProps) {
-  const [activeTab, setActiveTab] = useState<'challenges' | 'recipes' | 'restaurants'>('challenges');
+  const [activeTab, setActiveTab] = useState<"challenges" | "recipes" | "restaurants">("challenges");
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'easy': return '#4ECDC4';
-      case 'medium': return '#FFD93D';
-      case 'hard': return '#FF6B6B';
-      default: return '#4ECDC4';
+      case "easy":
+        return "#4ECDC4";
+      case "medium":
+        return "#FFD93D";
+      case "hard":
+        return "#FF6B6B";
+      default:
+        return "#4ECDC4";
     }
   };
 
@@ -139,7 +135,7 @@ export default function DiscoverSection({ onNavigate }: DiscoverSectionProps) {
           </View>
         </View>
       </View>
-      
+
       <View style={styles.challengeStats}>
         <View style={styles.statItem}>
           <Ionicons name="people" size={16} color="rgba(255, 255, 255, 0.7)" />
@@ -154,7 +150,7 @@ export default function DiscoverSection({ onNavigate }: DiscoverSectionProps) {
           <Text style={styles.statText}>{challenge.reward}</Text>
         </View>
       </View>
-      
+
       <TouchableOpacity style={styles.joinButton}>
         <Text style={styles.joinButtonText}>Join Challenge</Text>
       </TouchableOpacity>
@@ -216,12 +212,12 @@ export default function DiscoverSection({ onNavigate }: DiscoverSectionProps) {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => onNavigate('camera')}>
-          <Ionicons name="camera-outline" size={24} color="white" />
+        <TouchableOpacity onPress={() => onNavigate("camera")}>
+          <Ionicons name="arrow-back" size={24} color="white" />
         </TouchableOpacity>
-        
+
         <Text style={styles.headerTitle}>Discover</Text>
-        
+
         <TouchableOpacity>
           <Ionicons name="search-outline" size={24} color="white" />
         </TouchableOpacity>
@@ -229,7 +225,7 @@ export default function DiscoverSection({ onNavigate }: DiscoverSectionProps) {
 
       {/* Tab Navigation */}
       <View style={styles.tabContainer}>
-        {(['challenges', 'recipes', 'restaurants'] as const).map((tab) => (
+        {(["challenges", "recipes", "restaurants"] as const).map(tab => (
           <TouchableOpacity
             key={tab}
             style={[styles.tab, activeTab === tab && styles.tabActive]}
@@ -244,7 +240,7 @@ export default function DiscoverSection({ onNavigate }: DiscoverSectionProps) {
 
       {/* Content */}
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {activeTab === 'challenges' && (
+        {activeTab === "challenges" && (
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>Active Challenges</Text>
@@ -253,7 +249,7 @@ export default function DiscoverSection({ onNavigate }: DiscoverSectionProps) {
               </TouchableOpacity>
             </View>
             {mockChallenges.map(renderChallenge)}
-            
+
             {/* Featured Challenge */}
             <View style={styles.featuredChallenge}>
               <Text style={styles.featuredTitle}>🏆 Challenge of the Week</Text>
@@ -267,7 +263,7 @@ export default function DiscoverSection({ onNavigate }: DiscoverSectionProps) {
           </View>
         )}
 
-        {activeTab === 'recipes' && (
+        {activeTab === "recipes" && (
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>Recommended for You</Text>
@@ -278,12 +274,12 @@ export default function DiscoverSection({ onNavigate }: DiscoverSectionProps) {
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {mockRecipes.map(renderRecipe)}
             </ScrollView>
-            
+
             {/* Recipe Categories */}
             <View style={styles.categoriesSection}>
               <Text style={styles.sectionTitle}>Categories</Text>
               <View style={styles.categoriesGrid}>
-                {['High Protein', 'Low Carb', 'Vegetarian', 'Quick & Easy'].map((category, index) => (
+                {["High Protein", "Low Carb", "Vegetarian", "Quick & Easy"].map((category, index) => (
                   <TouchableOpacity key={index} style={styles.categoryCard}>
                     <Text style={styles.categoryText}>{category}</Text>
                   </TouchableOpacity>
@@ -293,7 +289,7 @@ export default function DiscoverSection({ onNavigate }: DiscoverSectionProps) {
           </View>
         )}
 
-        {activeTab === 'restaurants' && (
+        {activeTab === "restaurants" && (
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>Healthy Spots Nearby</Text>
@@ -302,16 +298,14 @@ export default function DiscoverSection({ onNavigate }: DiscoverSectionProps) {
               </TouchableOpacity>
             </View>
             {mockRestaurants.map(renderRestaurant)}
-            
+
             {/* Filter Options */}
             <View style={styles.filtersSection}>
               <Text style={styles.sectionTitle}>Filter by Cuisine</Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {['All', 'Healthy', 'Mediterranean', 'Asian', 'Mexican', 'Italian'].map((filter, index) => (
+                {["All", "Healthy", "Mediterranean", "Asian", "Mexican", "Italian"].map((filter, index) => (
                   <TouchableOpacity key={index} style={[styles.filterChip, index === 0 && styles.filterChipActive]}>
-                    <Text style={[styles.filterChipText, index === 0 && styles.filterChipTextActive]}>
-                      {filter}
-                    </Text>
+                    <Text style={[styles.filterChipText, index === 0 && styles.filterChipTextActive]}>{filter}</Text>
                   </TouchableOpacity>
                 ))}
               </ScrollView>
@@ -326,24 +320,24 @@ export default function DiscoverSection({ onNavigate }: DiscoverSectionProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: "#000000",
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingTop: 60,
     paddingHorizontal: 20,
     paddingBottom: 16,
   },
   headerTitle: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   tabContainer: {
-    flexDirection: 'row',
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    flexDirection: "row",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     marginHorizontal: 16,
     borderRadius: 12,
     padding: 4,
@@ -352,19 +346,19 @@ const styles = StyleSheet.create({
   tab: {
     flex: 1,
     paddingVertical: 8,
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 8,
   },
   tabActive: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: "#FF6B35",
   },
   tabText: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   tabTextActive: {
-    color: 'white',
+    color: "white",
   },
   content: {
     flex: 1,
@@ -374,30 +368,30 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
   },
   sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 16,
   },
   sectionTitle: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   seeAllText: {
-    color: '#FF6B35',
+    color: "#FF6B35",
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   challengeCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
   },
   challengeHeader: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    alignItems: "flex-start",
     marginBottom: 12,
   },
   challengeEmoji: {
@@ -408,17 +402,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   challengeTitle: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 4,
   },
   challengeDescription: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 14,
   },
   challengeMeta: {
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
   difficultyBadge: {
     paddingHorizontal: 8,
@@ -426,107 +420,107 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   difficultyText: {
-    color: 'white',
+    color: "white",
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   challengeStats: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 16,
   },
   statItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   statText: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 12,
     marginLeft: 4,
   },
   joinButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: "#FF6B35",
     paddingVertical: 12,
     borderRadius: 8,
-    alignItems: 'center',
+    alignItems: "center",
   },
   joinButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   featuredChallenge: {
-    backgroundColor: 'rgba(255, 107, 53, 0.1)',
+    backgroundColor: "rgba(255, 107, 53, 0.1)",
     borderRadius: 12,
     padding: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 107, 53, 0.3)',
+    borderColor: "rgba(255, 107, 53, 0.3)",
     marginTop: 8,
   },
   featuredTitle: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 8,
   },
   featuredDescription: {
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: "rgba(255, 255, 255, 0.8)",
     fontSize: 14,
     lineHeight: 20,
     marginBottom: 16,
   },
   featuredButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: "#FF6B35",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 8,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
   },
   featuredButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   recipeCard: {
     width: width * 0.7,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
     borderRadius: 12,
     marginRight: 12,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   recipeImage: {
-    width: '100%',
+    width: "100%",
     height: 120,
   },
   recipeContent: {
     padding: 12,
   },
   recipeTitle: {
-    color: 'white',
+    color: "white",
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 8,
   },
   recipeStats: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 8,
   },
   recipeStat: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginRight: 12,
   },
   recipeStatText: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 12,
     marginLeft: 4,
   },
   recipeTags: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   recipeTag: {
-    backgroundColor: 'rgba(255, 107, 53, 0.2)',
+    backgroundColor: "rgba(255, 107, 53, 0.2)",
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 4,
@@ -534,81 +528,81 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   recipeTagText: {
-    color: '#FF6B35',
+    color: "#FF6B35",
     fontSize: 10,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   categoriesSection: {
     marginTop: 24,
   },
   categoriesGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     gap: 8,
   },
   categoryCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 8,
     marginBottom: 8,
   },
   categoryText: {
-    color: 'white',
+    color: "white",
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   restaurantCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
     borderRadius: 12,
     marginBottom: 12,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   restaurantImage: {
-    width: '100%',
+    width: "100%",
     height: 120,
   },
   restaurantContent: {
     padding: 12,
   },
   restaurantHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 4,
   },
   restaurantName: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     flex: 1,
   },
   healthScoreBadge: {
-    backgroundColor: '#4ECDC4',
+    backgroundColor: "#4ECDC4",
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 8,
   },
   healthScoreText: {
-    color: 'white',
+    color: "white",
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   restaurantCuisine: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 14,
     marginBottom: 8,
   },
   restaurantStats: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   restaurantStat: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginRight: 16,
   },
   restaurantStatText: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 12,
     marginLeft: 4,
   },
@@ -616,21 +610,21 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   filterChip: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 16,
     marginRight: 8,
   },
   filterChipActive: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: "#FF6B35",
   },
   filterChipText: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   filterChipTextActive: {
-    color: 'white',
+    color: "white",
   },
 });

@@ -190,16 +190,24 @@ export default function OrbitalCamera({ onNavigate }: OrbitalCameraProps) {
 
         {/* Bottom Controls */}
         <View style={styles.bottomControls}>
-          <TouchableOpacity style={styles.secondaryButton} onPress={() => onNavigate("progress")}>
-            <Ionicons name="images-outline" size={20} color="white" />
-            <Text style={styles.secondaryButtonText}>Gallery</Text>
-          </TouchableOpacity>
+          <View style={styles.leftControls}>
+            {/* <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push("/meal-detail?mode=text")}>
+              <Ionicons name="create-outline" size={20} color="white" />
+              <Text style={styles.secondaryButtonText}>Text</Text>
+            </TouchableOpacity> */}
+            <TouchableOpacity style={styles.secondaryButton} onPress={() => onNavigate("progress")}>
+              <Ionicons name="images-outline" size={20} color="white" />
+              <Text style={styles.secondaryButtonText}>Gallery</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.secondaryButton} onPress={() => onNavigate("social")}>
+              <Ionicons name="people-outline" size={20} color="white" />
+              <Text style={styles.secondaryButtonText}>Social</Text>
+            </TouchableOpacity>
+          </View>
 
           <View style={styles.centerHint}>
-            {isCapturing ? (
+            {isCapturing && (
               <Text style={styles.capturingText}>Analyzing...</Text>
-            ) : (
-              <Text style={styles.hintText}>Tap to capture</Text>
             )}
           </View>
 
@@ -398,6 +406,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+  },
+  leftControls: {
+    flexDirection: "row",
+    gap: 16,
   },
   secondaryButton: {
     alignItems: "center",
